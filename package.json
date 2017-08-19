@@ -1,0 +1,11 @@
+{
+  "name": "berger-table-generator",
+  "version": "1.0.0",
+  "description": "Berger table (round-robin) tournament generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sasha Tatar",
+  "license": "MIT"
+}
