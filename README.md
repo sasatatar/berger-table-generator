@@ -1,10 +1,13 @@
 # Berger table (round-robin) generator for tournaments
 
+### Function signature
+`bergerTable: (n: number) => [[ { round: number, game: number, teamA: number, teamB: number } ]];`
+
 ```
 npm install --save berger-table-generator
 ```
 ```
-import {bergerTable} from 'berger-table-generator';
+import bergerTable from 'berger-table-generator';
 
 let rounds = bergerTable(7);
 
