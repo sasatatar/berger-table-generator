@@ -28,6 +28,4 @@ function bergerTable(n) {
     })
 }
 
-console.log(bergerTable(7));
-console.log('\n');
-console.log(bergerTable(9));
+module.exports = bergerTable;
