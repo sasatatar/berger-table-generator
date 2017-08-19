@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "test"
+    "url": "git@github.com:sasatatar/berger-table-generator.git"
   },
   "author": "Sasha Tatar",
   "license": "MIT"
