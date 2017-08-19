@@ -2,7 +2,7 @@
 
 ### Function signature
 `bergerTable: (n: number) => [Array<{ round: number, game: number, teamA: number, teamB: number }>];`
-`bergerTable<Team>: (teams: <Team>Array) => [Array<{ round: number, game: number, teamA: Team, teamB: Team }>];`
+`bergerTable<Team>: (teams: Array<Team>) => [Array<{ round: number, game: number, teamA: Team, teamB: Team }>];`
 
 If an array of objects is passed as an argument, the function will not perform any mutations on it. However, the output will contain the same object references that were passed in. Any changes made on them will have the same effect as changing the original `Team` objects.
 
