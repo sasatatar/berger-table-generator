@@ -1,5 +1,10 @@
 // https://en.wikipedia.org/wiki/Round-robin_tournament
-function bergerTable(n) {
+function bergerTable(teams) {
+    const isArray = Array.isArray(teams);
+    if (isArray) 
+        teams = [...teams]; // copy array to avoid side effects
+    const n = isArray ? teams.length : teams;
+
     const numberOfRounds = n % 2 === 0 ? n-1 : n;
     const gamesPerRound = Math.floor(n/2);
     let count = 0;
@@ -8,21 +13,22 @@ function bergerTable(n) {
             return {
                 round: i+1,
                 game: k+1,
-                teamA: count++ % n + 1,
+                teamA: isArray ? teams[count++ % n] : count++ % n + 1,
                 teamB: null
             }
         })
     });
     let index = 0;
-    let teams = Array.from({length: n}).map((_, i) => i+1).reverse();
+    let players = isArray ? teams : Array.from({length: n}).map((_, i) => i+1);
+    players.reverse();
     return rounds.map(round => {
         return round.map(game => {
-            let teamB = teams[index++];
+            let teamB = players[index++];
             if (index > n-1) {
                 index = 0;
-                teams.push(teams.shift());
+                players.push(players.shift());
             }
-            game.teamB = teamB !== game.teamA ? teamB : teams[index++];
+            game.teamB = teamB !== game.teamA ? teamB : players[index++];
             return game;
         })
     })

@@ -1,7 +1,10 @@
 # Berger table (round-robin) generator for tournaments
 
 ### Function signature
-`bergerTable: (n: number) => [[ { round: number, game: number, teamA: number, teamB: number } ]];`
+`bergerTable: (n: number) => [Array<{ round: number, game: number, teamA: number, teamB: number }>];`
+`bergerTable<Team>: (teams: <Team>Array) => [Array<{ round: number, game: number, teamA: Team, teamB: Team }>];`
+
+If an array of objects is passed as an argument, the function will not perform any mutations on it. However, the output will contain the same object references that were passed in. Any changes made on them will have the same effect as changing the original `Team` objects.
 
 ```
 npm install --save berger-table-generator
@@ -9,30 +12,30 @@ npm install --save berger-table-generator
 ```
 import bergerTable from 'berger-table-generator';
 
-let rounds = bergerTable(7);
-
-console.log(rounds);
+console.log(bergerTable(5));
+console.log();
+console.log(bergerTable(['Bob', 'Joe', 'Anna', 'Maria', 'Jane']));
 /*
-[ [ { round: 1, game: 1, teamA: 1, teamB: 7 },
-    { round: 1, game: 2, teamA: 2, teamB: 6 },
-    { round: 1, game: 3, teamA: 3, teamB: 5 } ],
-  [ { round: 2, game: 1, teamA: 4, teamB: 3 },
-    { round: 2, game: 2, teamA: 5, teamB: 2 },
-    { round: 2, game: 3, teamA: 6, teamB: 1 } ],
-  [ { round: 3, game: 1, teamA: 7, teamB: 6 },
-    { round: 3, game: 2, teamA: 1, teamB: 5 },
-    { round: 3, game: 3, teamA: 2, teamB: 4 } ],
-  [ { round: 4, game: 1, teamA: 3, teamB: 2 },
-    { round: 4, game: 2, teamA: 4, teamB: 1 },
-    { round: 4, game: 3, teamA: 5, teamB: 7 } ],
-  [ { round: 5, game: 1, teamA: 6, teamB: 5 },
-    { round: 5, game: 2, teamA: 7, teamB: 4 },
-    { round: 5, game: 3, teamA: 1, teamB: 3 } ],
-  [ { round: 6, game: 1, teamA: 2, teamB: 1 },
-    { round: 6, game: 2, teamA: 3, teamB: 7 },
-    { round: 6, game: 3, teamA: 4, teamB: 6 } ],
-  [ { round: 7, game: 1, teamA: 5, teamB: 4 },
-    { round: 7, game: 2, teamA: 6, teamB: 3 },
-    { round: 7, game: 3, teamA: 7, teamB: 2 } ] ]
+[ [ { round: 1, game: 1, teamA: 1, teamB: 5 },
+    { round: 1, game: 2, teamA: 2, teamB: 4 } ],
+  [ { round: 2, game: 1, teamA: 3, teamB: 2 },
+    { round: 2, game: 2, teamA: 4, teamB: 1 } ],
+  [ { round: 3, game: 1, teamA: 5, teamB: 4 },
+    { round: 3, game: 2, teamA: 1, teamB: 3 } ],
+  [ { round: 4, game: 1, teamA: 2, teamB: 1 },
+    { round: 4, game: 2, teamA: 3, teamB: 5 } ],
+  [ { round: 5, game: 1, teamA: 4, teamB: 3 },
+    { round: 5, game: 2, teamA: 5, teamB: 2 } ] ]
+
+[ [ { round: 1, game: 1, teamA: 'Bob', teamB: 'Jane' },
+    { round: 1, game: 2, teamA: 'Joe', teamB: 'Maria' } ],
+  [ { round: 2, game: 1, teamA: 'Anna', teamB: 'Joe' },
+    { round: 2, game: 2, teamA: 'Maria', teamB: 'Bob' } ],
+  [ { round: 3, game: 1, teamA: 'Jane', teamB: 'Maria' },
+    { round: 3, game: 2, teamA: 'Bob', teamB: 'Anna' } ],
+  [ { round: 4, game: 1, teamA: 'Joe', teamB: 'Bob' },
+    { round: 4, game: 2, teamA: 'Anna', teamB: 'Jane' } ],
+  [ { round: 5, game: 1, teamA: 'Maria', teamB: 'Anna' },
+    { round: 5, game: 2, teamA: 'Jane', teamB: 'Joe' } ] ]
 */
 ```
