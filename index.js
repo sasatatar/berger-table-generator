@@ -1,37 +1,41 @@
 // https://en.wikipedia.org/wiki/Round-robin_tournament
-function bergerTable(teams) {
-    const isArray = Array.isArray(teams);
-    if (isArray) 
+function bergerTable(teams, useDummy=false, dummy={}) {
+    
+    if (!Array.isArray(teams)) 
+        teams = Array.from({ length: teams }).map((_, i) => i);
+    else 
         teams = [...teams]; // copy array to avoid side effects
-    const n = isArray ? teams.length : teams;
+    if (teams.length % 2 !== 0)
+        teams.push(dummy);
 
-    const numberOfRounds = n % 2 === 0 ? n-1 : n;
-    const gamesPerRound = Math.floor(n/2);
-    let count = 0;
-    let rounds = Array.from({length: numberOfRounds}).map((_, i) => {
-        return Array.from({length: gamesPerRound}).map((_, k) => {
-            return {
-                round: i+1,
-                game: k+1,
-                teamA: isArray ? teams[count++ % n] : count++ % n + 1,
-                teamB: null
+    const n = teams.length;
+    const numberOfRounds = n-1;
+    const gamesPerRound = n/2;
+
+    let columnA = teams.slice(0, gamesPerRound);
+    let columnB = teams.slice(gamesPerRound);
+    const fixed = teams[0];
+
+    return Array.from({length: numberOfRounds}).map((_, i) => {
+        let gameCount = 1;
+        let round = Array.from({length: gamesPerRound}).reduce((acc, _, k) => {
+            if (useDummy || (columnA[k] !== dummy && columnB[k] !== dummy)) {
+                acc.push({
+                    round: i+1,
+                    game: gameCount,
+                    teamA: columnA[k],
+                    teamB: columnB[k]
+                }); 
+                gameCount++;
             }
-        })
+            return acc;
+        }, []);
+
+        // rotate elements
+        columnA = [fixed, columnB.shift(), ...columnA.slice(1)];
+        columnB.push(columnA.pop());
+        return round;
     });
-    let index = 0;
-    let players = isArray ? teams : Array.from({length: n}).map((_, i) => i+1);
-    players.reverse();
-    return rounds.map(round => {
-        return round.map(game => {
-            let teamB = players[index++];
-            if (index > n-1) {
-                index = 0;
-                players.push(players.shift());
-            }
-            game.teamB = teamB !== game.teamA ? teamB : players[index++];
-            return game;
-        })
-    })
 }
 
 module.exports = bergerTable;
